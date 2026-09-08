@@ -47,6 +47,46 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('keypad đúng bố cục sáu hàng của thiết kế tham khảo', (
+    tester,
+  ) async {
+    await tester.pumpWidget(const MyApp());
+
+    final sqrtRect = tester.getRect(find.byKey(const Key('button_sqrt')));
+    final squareRect = tester.getRect(find.byKey(const Key('button_square')));
+    final percentRect = tester.getRect(find.byKey(const Key('button_percent')));
+    final acRect = tester.getRect(find.byKey(const Key('button_ac')));
+    final sevenRect = tester.getRect(find.byKey(const Key('button_7')));
+    final fourRect = tester.getRect(find.byKey(const Key('button_4')));
+    final oneRect = tester.getRect(find.byKey(const Key('button_1')));
+    final signRect = tester.getRect(find.byKey(const Key('button_sign')));
+    final zeroRect = tester.getRect(find.byKey(const Key('button_0')));
+    final decimalRect = tester.getRect(find.byKey(const Key('button_decimal')));
+    final addRect = tester.getRect(find.byKey(const Key('button_add')));
+    final equalsRect = tester.getRect(find.byKey(const Key('button_equals')));
+
+    expect(squareRect.center.dy, closeTo(sqrtRect.center.dy, 0.1));
+    expect(percentRect.center.dy, closeTo(sqrtRect.center.dy, 0.1));
+    expect(acRect.center.dy, closeTo(sqrtRect.center.dy, 0.1));
+    expect(sqrtRect.center.dx, lessThan(squareRect.center.dx));
+    expect(squareRect.center.dx, lessThan(percentRect.center.dx));
+    expect(percentRect.center.dx, lessThan(acRect.center.dx));
+
+    expect(sqrtRect.center.dy, lessThan(sevenRect.center.dy));
+    expect(sevenRect.center.dy, lessThan(fourRect.center.dy));
+    expect(fourRect.center.dy, lessThan(oneRect.center.dy));
+    expect(oneRect.center.dy, lessThan(signRect.center.dy));
+    expect(signRect.center.dy, lessThan(equalsRect.center.dy));
+
+    expect(zeroRect.center.dy, closeTo(signRect.center.dy, 0.1));
+    expect(decimalRect.center.dy, closeTo(signRect.center.dy, 0.1));
+    expect(addRect.center.dy, closeTo(signRect.center.dy, 0.1));
+    expect(equalsRect.left, closeTo(sqrtRect.left, 0.1));
+    expect(equalsRect.right, closeTo(acRect.right, 0.1));
+    expect(equalsRect.width, lessThanOrEqualTo(448));
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('thực hiện đúng bốn phép tính cơ bản', (tester) async {
     await tester.pumpWidget(const MyApp());
 

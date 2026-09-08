@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const _backgroundColor = Color(0xFF0F172A);
-const _keypadColor = Color(0xFF111827);
+const _keypadColor = Color(0xFF182234);
 const _numberButtonColor = Color(0xFF1E293B);
 const _numberBorderColor = Color(0xFF334155);
-const _operatorColor = Color(0xFF4F46E5);
+const _secondaryButtonColor = Color(0xFF26334D);
+const _operatorColor = Color(0xFF6366F1);
 const _secondaryTextColor = Color(0xFF94A3B8);
 const _accentColor = Color(0xFF38BDF8);
 const _divisionByZeroMessage = 'Cannot divide by zero';
@@ -492,119 +493,125 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         ),
         child: Scaffold(
           body: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final isNarrow = constraints.maxWidth < 360;
-                final compactHeight = constraints.maxHeight < 700;
-                final veryCompactHeight = constraints.maxHeight < 520;
-                final pagePadding = isNarrow ? 12.0 : 20.0;
-                final keypadPadding = isNarrow ? 12.0 : 16.0;
-                final gap = veryCompactHeight
-                    ? 6.0
-                    : compactHeight || isNarrow
-                    ? 8.0
-                    : 10.0;
-                final studentTopPadding = veryCompactHeight
-                    ? 4.0
-                    : compactHeight
-                    ? 6.0
-                    : 12.0;
-                final studentBottomPadding = veryCompactHeight
-                    ? 2.0
-                    : compactHeight
-                    ? 4.0
-                    : 6.0;
-                final studentVerticalPadding = veryCompactHeight
-                    ? 4.0
-                    : compactHeight
-                    ? 6.0
-                    : 8.0;
-                final keypadTopPadding = veryCompactHeight
-                    ? 6.0
-                    : compactHeight
-                    ? 10.0
-                    : 16.0;
-                final keypadBottomPadding = veryCompactHeight
-                    ? 6.0
-                    : compactHeight
-                    ? 8.0
-                    : 12.0;
-                final keypadWidth = constraints.maxWidth - keypadPadding * 2;
-                final keyWidth = (keypadWidth - gap * 3) / 4;
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 480),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isNarrow = constraints.maxWidth < 360;
+                    final compactHeight = constraints.maxHeight < 700;
+                    final veryCompactHeight = constraints.maxHeight < 520;
+                    final pagePadding = isNarrow ? 12.0 : 20.0;
+                    final keypadPadding = isNarrow ? 12.0 : 16.0;
+                    final gap = veryCompactHeight
+                        ? 6.0
+                        : compactHeight || isNarrow
+                        ? 8.0
+                        : 10.0;
+                    final studentTopPadding = veryCompactHeight
+                        ? 4.0
+                        : compactHeight
+                        ? 6.0
+                        : 12.0;
+                    final studentBottomPadding = veryCompactHeight
+                        ? 2.0
+                        : compactHeight
+                        ? 4.0
+                        : 6.0;
+                    final studentVerticalPadding = veryCompactHeight
+                        ? 4.0
+                        : compactHeight
+                        ? 6.0
+                        : 8.0;
+                    final keypadTopPadding = veryCompactHeight
+                        ? 6.0
+                        : compactHeight
+                        ? 10.0
+                        : 16.0;
+                    final keypadBottomPadding = veryCompactHeight
+                        ? 6.0
+                        : compactHeight
+                        ? 8.0
+                        : 12.0;
+                    final keypadWidth =
+                        constraints.maxWidth - keypadPadding * 2;
+                    final keyWidth = (keypadWidth - gap * 3) / 4;
 
-                // Reserve enough room for both display lines before sizing the
-                // six keypad rows. This matters most on wide, short web views,
-                // where button width no longer limits button height.
-                const keypadRowCount = 6;
-                final studentHeightBudget = veryCompactHeight
-                    ? 30.0
-                    : compactHeight
-                    ? 38.0
-                    : 50.0;
-                final displayHeightBudget = veryCompactHeight
-                    ? 70.0
-                    : compactHeight
-                    ? 96.0
-                    : 132.0;
-                final desiredKeyHeight = veryCompactHeight
-                    ? 56.0
-                    : compactHeight
-                    ? 72.0
-                    : 78.0;
-                final availableKeyHeight =
-                    (constraints.maxHeight -
-                        studentHeightBudget -
-                        displayHeightBudget -
-                        1 -
-                        keypadTopPadding -
-                        keypadBottomPadding -
-                        gap * (keypadRowCount - 1)) /
-                    keypadRowCount;
-                final keyHeight = math.max(
-                  40.0,
-                  math.min(
-                    desiredKeyHeight,
-                    math.min(keyWidth * 0.95, availableKeyHeight),
-                  ),
-                );
+                    // Reserve enough room for both display lines before sizing the
+                    // six keypad rows. This matters most on wide, short web views,
+                    // where button width no longer limits button height.
+                    const keypadRowCount = 6;
+                    final studentHeightBudget = veryCompactHeight
+                        ? 30.0
+                        : compactHeight
+                        ? 38.0
+                        : 50.0;
+                    final displayHeightBudget = veryCompactHeight
+                        ? 70.0
+                        : compactHeight
+                        ? 96.0
+                        : 132.0;
+                    final desiredKeyHeight = veryCompactHeight
+                        ? 52.0
+                        : compactHeight
+                        ? 58.0
+                        : 66.0;
+                    final availableKeyHeight =
+                        (constraints.maxHeight -
+                            studentHeightBudget -
+                            displayHeightBudget -
+                            1 -
+                            keypadTopPadding -
+                            keypadBottomPadding -
+                            gap * (keypadRowCount - 1)) /
+                        keypadRowCount;
+                    final keyHeight = math.max(
+                      40.0,
+                      math.min(
+                        desiredKeyHeight,
+                        math.min(keyWidth * 0.95, availableKeyHeight),
+                      ),
+                    );
 
-                return Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        pagePadding,
-                        studentTopPadding,
-                        pagePadding,
-                        studentBottomPadding,
-                      ),
-                      child: _buildStudentInfo(
-                        verticalPadding: studentVerticalPadding,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildDisplay(
-                        isNarrow,
-                        compactHeight: compactHeight,
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24),
-                      child: Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: Color(0xFF1E293B),
-                      ),
-                    ),
-                    _buildKeypad(
-                      keyHeight: keyHeight,
-                      gap: gap,
-                      horizontalPadding: keypadPadding,
-                      topPadding: keypadTopPadding,
-                      bottomPadding: keypadBottomPadding,
-                    ),
-                  ],
-                );
-              },
+                    return Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            pagePadding,
+                            studentTopPadding,
+                            pagePadding,
+                            studentBottomPadding,
+                          ),
+                          child: _buildStudentInfo(
+                            verticalPadding: studentVerticalPadding,
+                          ),
+                        ),
+                        Expanded(
+                          child: _buildDisplay(
+                            isNarrow,
+                            compactHeight: compactHeight,
+                          ),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24),
+                          child: Divider(
+                            height: 1,
+                            thickness: 1,
+                            color: Color(0xFF1E293B),
+                          ),
+                        ),
+                        _buildKeypad(
+                          keyHeight: keyHeight,
+                          gap: gap,
+                          horizontalPadding: keypadPadding,
+                          topPadding: keypadTopPadding,
+                          bottomPadding: keypadBottomPadding,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ),
@@ -736,6 +743,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           color: _secondaryTextColor,
                           fontSize: compactHeight ? 15 : 17,
                           fontWeight: FontWeight.w500,
+                          fontFamily: 'monospace',
                           letterSpacing: 0.6,
                         ),
                       ),
@@ -813,6 +821,13 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         color: _keypadColor,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
         border: Border(top: BorderSide(color: Color(0xFF1E293B))),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x3D000000),
+            blurRadius: 24,
+            offset: Offset(0, -4),
+          ),
+        ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -821,20 +836,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             keyHeight: keyHeight,
             gap: gap,
             buttons: [
-              _buildButton('AC', 'ac', _ButtonKind.clear),
-              _buildButton('±', 'sign', _ButtonKind.function),
-              _buildButton('%', 'percent', _ButtonKind.function),
-              _buildButton('÷', 'divide', _ButtonKind.operator),
-            ],
-          ),
-          SizedBox(height: gap),
-          _buildKeypadRow(
-            keyHeight: keyHeight,
-            gap: gap,
-            spans: const [2, 2],
-            buttons: [
               _buildButton('√', 'sqrt', _ButtonKind.advanced),
               _buildButton('x²', 'square', _ButtonKind.advanced),
+              _buildButton('%', 'percent', _ButtonKind.function),
+              _buildButton('AC', 'ac', _ButtonKind.clear),
             ],
           ),
           SizedBox(height: gap),
@@ -845,7 +850,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               _buildButton('7', '7', _ButtonKind.number),
               _buildButton('8', '8', _ButtonKind.number),
               _buildButton('9', '9', _ButtonKind.number),
-              _buildButton('×', 'multiply', _ButtonKind.operator),
+              _buildButton('÷', 'divide', _ButtonKind.operator),
             ],
           ),
           SizedBox(height: gap),
@@ -856,7 +861,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               _buildButton('4', '4', _ButtonKind.number),
               _buildButton('5', '5', _ButtonKind.number),
               _buildButton('6', '6', _ButtonKind.number),
-              _buildButton('−', 'subtract', _ButtonKind.operator),
+              _buildButton('×', 'multiply', _ButtonKind.operator),
             ],
           ),
           SizedBox(height: gap),
@@ -867,6 +872,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               _buildButton('1', '1', _ButtonKind.number),
               _buildButton('2', '2', _ButtonKind.number),
               _buildButton('3', '3', _ButtonKind.number),
+              _buildButton('−', 'subtract', _ButtonKind.operator),
+            ],
+          ),
+          SizedBox(height: gap),
+          _buildKeypadRow(
+            keyHeight: keyHeight,
+            gap: gap,
+            buttons: [
+              _buildButton('±', 'sign', _ButtonKind.function),
+              _buildButton('0', '0', _ButtonKind.number),
+              _buildButton(',', 'decimal', _ButtonKind.number),
               _buildButton('+', 'add', _ButtonKind.operator),
             ],
           ),
@@ -874,12 +890,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           _buildKeypadRow(
             keyHeight: keyHeight,
             gap: gap,
-            spans: const [1, 1, 2],
-            buttons: [
-              _buildButton('0', '0', _ButtonKind.number),
-              _buildButton(',', 'decimal', _ButtonKind.number),
-              _buildButton('=', 'equals', _ButtonKind.equals),
-            ],
+            spans: const [4],
+            buttons: [_buildButton('=', 'equals', _ButtonKind.equals)],
           ),
         ],
       ),
@@ -933,7 +945,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
 enum _ButtonKind { number, function, advanced, clear, operator, equals }
 
-class _CalculatorButton extends StatelessWidget {
+class _CalculatorButton extends StatefulWidget {
   const _CalculatorButton({
     super.key,
     required this.label,
@@ -946,80 +958,99 @@ class _CalculatorButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   @override
+  State<_CalculatorButton> createState() => _CalculatorButtonState();
+}
+
+class _CalculatorButtonState extends State<_CalculatorButton> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(22);
-    final isEquals = kind == _ButtonKind.equals;
-    final backgroundColor = switch (kind) {
+    final isEquals = widget.kind == _ButtonKind.equals;
+    final backgroundColor = switch (widget.kind) {
       _ButtonKind.number => _numberButtonColor,
-      _ButtonKind.function => const Color(0xFF1E293B),
-      _ButtonKind.advanced => const Color(0xFF172554),
+      _ButtonKind.function => _secondaryButtonColor,
+      _ButtonKind.advanced => _secondaryButtonColor,
       _ButtonKind.clear => const Color(0xFF2A1B2A),
       _ButtonKind.operator => _operatorColor,
       _ButtonKind.equals => Colors.transparent,
     };
-    final borderColor = switch (kind) {
+    final borderColor = switch (widget.kind) {
       _ButtonKind.number => _numberBorderColor,
-      _ButtonKind.function => const Color(0xFF3A475C),
-      _ButtonKind.advanced => const Color(0xFF3B82F6),
+      _ButtonKind.function => const Color(0xFF475569),
+      _ButtonKind.advanced => const Color(0xFF475569),
       _ButtonKind.clear => const Color(0xFF633044),
-      _ButtonKind.operator => const Color(0xFF7778F4),
+      _ButtonKind.operator => const Color(0xFF818CF8),
       _ButtonKind.equals => const Color(0xFF67D4FF),
     };
-    final textColor = kind == _ButtonKind.clear
+    final textColor = widget.kind == _ButtonKind.clear
         ? const Color(0xFFFF718F)
-        : kind == _ButtonKind.function || kind == _ButtonKind.advanced
+        : widget.kind == _ButtonKind.advanced
+        ? const Color(0xFF7DD3FC)
+        : widget.kind == _ButtonKind.function
         ? const Color(0xFFCBD5E1)
         : Colors.white;
-    final fontSize = switch (kind) {
+    final fontSize = switch (widget.kind) {
       _ButtonKind.clear => 23.0,
       _ButtonKind.equals => 32.0,
       _ButtonKind.operator => 30.0,
-      _ButtonKind.advanced => 26.0,
+      _ButtonKind.advanced => 25.0,
       _ => 28.0,
     };
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        gradient: isEquals
-            ? const LinearGradient(
-                colors: [Color(0xFF0EA5E9), Color(0xFF2563EB)],
-              )
-            : null,
-        borderRadius: borderRadius,
-        border: Border.all(color: borderColor.withValues(alpha: 0.75)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.22),
-            blurRadius: isEquals ? 12 : 7,
-            offset: const Offset(0, 3),
-          ),
-          if (isEquals)
+    return AnimatedScale(
+      scale: _isPressed ? 0.94 : 1,
+      duration: const Duration(milliseconds: 120),
+      curve: Curves.easeOutCubic,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          gradient: isEquals
+              ? const LinearGradient(
+                  colors: [Color(0xFF0EA5E9), Color(0xFF2563EB)],
+                )
+              : null,
+          borderRadius: borderRadius,
+          border: Border.all(color: borderColor.withValues(alpha: 0.58)),
+          boxShadow: [
             BoxShadow(
-              color: const Color(0xFF0EA5E9).withValues(alpha: 0.18),
-              blurRadius: 15,
+              color: Colors.black.withValues(alpha: 0.28),
+              blurRadius: isEquals ? 12 : 8,
+              offset: const Offset(0, 4),
             ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: borderRadius,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onPressed,
-          splashColor: Colors.white.withValues(alpha: 0.12),
-          highlightColor: Colors.white.withValues(alpha: 0.06),
-          child: Center(
-            child: Text(
-              label,
-              style: TextStyle(
-                color: textColor,
-                fontSize: fontSize,
-                fontWeight: isEquals
-                    ? FontWeight.bold
-                    : kind == _ButtonKind.number
-                    ? FontWeight.w500
-                    : FontWeight.w600,
+            if (isEquals)
+              BoxShadow(
+                color: const Color(0xFF0EA5E9).withValues(alpha: 0.28),
+                blurRadius: 18,
+              ),
+          ],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: borderRadius,
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: widget.onPressed,
+            onHighlightChanged: (isHighlighted) {
+              if (_isPressed != isHighlighted) {
+                setState(() => _isPressed = isHighlighted);
+              }
+            },
+            splashColor: Colors.white.withValues(alpha: 0.12),
+            highlightColor: Colors.white.withValues(alpha: 0.06),
+            child: Center(
+              child: Text(
+                widget.label,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: fontSize,
+                  fontWeight: isEquals
+                      ? FontWeight.bold
+                      : widget.kind == _ButtonKind.number
+                      ? FontWeight.w500
+                      : FontWeight.w600,
+                ),
               ),
             ),
           ),
